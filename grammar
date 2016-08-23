@@ -1,0 +1,35 @@
+asm = Definition* statement*
+
+Definition = vardef | arraydef
+
+vardef = vardeftype name
+
+arraydef = arraydeftype name ',' number
+
+statement = [label] instruction? comment? endline
+
+label = name ':'
+
+instruction = op
+op = noparams_op
+   | onevar_op
+   | konstant_op
+
+konstant_op = charop 'a-z'
+            | intop  number
+	    | floatop decimal
+noparams_op = "PRTCR" | "POPX" | "ADD" | "SUB" | "MUL" | "DIV" | "MOD"
+
+onevar_op = "PRTCC" | "PRTCI" | "PRTCF" | "PRTCD" | "PUSHC" | "PUSHI"| ...
+comment = ';' ('a-z | 1-9')*
+
+vardeftype = "defc" | "defi" | "deff" | "defd" | "defs"
+        
+arraydeftype =  "defac" | "defai" | "defaf" | "defad" | "defas"
+
+endline = '\n'
+
+name = '[a-z]'('a-z | 1-9')*
+
+number = (1-9)+
+decimal = number('.'number)

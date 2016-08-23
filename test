@@ -1,0 +1,7 @@
+label:
+push
+pop
+label1: push
+label2: pop
+;comment
+label3: push ;comment
