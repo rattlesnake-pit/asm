@@ -1,7 +1,12 @@
 label:
-push
-pop
-label1: push
-label2: pop
+add
+halt
+label1: popx
+label2: prtcr
 ;comment
-label3: push ;comment
+label3: sub ;comment
+;asdfasdfasdf
+mul
+label33:
+div
+mod

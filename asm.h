@@ -4,6 +4,7 @@
 #define TMP_BUFFER_SIZE 100
 
 enum TOKENS {
+  HALT,
   PRINTLF,
   PRINT_CHAR,
   PRINT_INT,
@@ -29,7 +30,7 @@ enum TOKENS {
   POP_FLOAT,
   POP_DOUBLE,
   POP_STRING,
-  POP_TO_REGISTER,
+  POP_TO_LOOP_INDEX,
   POP_ARRAY_CHAR,
   POP_ARRAY_INT,
   POP_ARRAY_FLOAT,
@@ -60,12 +61,12 @@ enum TOKENS {
   SUBSTRACT,
   MULTIPLY,
   DIVIDE,
-  MODULE,
+  MODULO,
   COMPARE,
-  NAME,
-  SYMBOL,
   COMMENT,
-  ENDLINE
+  ENDLINE,
+  NAME,
+  SYMBOL
 };
 
 extern char* str_tokens[];
@@ -75,6 +76,7 @@ void getChar();
 int isVarDef(char c);
 int isArrayDef(char c);
 int isOp();
+int isOneByteOp();
 void next();
 void init();
 void scan();
@@ -83,6 +85,7 @@ void expected(char* s);
 int isDefinition(char c);
 enum TOKENS token;
 char look;
-char value[100];
+char value[TMP_BUFFER_SIZE];
 char tmp[TMP_BUFFER_SIZE];
+char outBuffer [1000];
 #endif

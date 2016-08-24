@@ -29,13 +29,18 @@ void doLabel() {
   printf("DOING LABEL\n");
 }
 
+void emitByte(char b) {
+  printf("wrote byte hex:%x dec:%d\n", b, b);
+}
+
+void doOneByteOp() {
+  emitByte(token);
+  next();
+}
 
 void doOp() {
-  switch(token) {
-      break;
-      break;
-    default:
-      break;
+  if(isOneByteOp()) {
+    doOneByteOp();
   }
 }
 

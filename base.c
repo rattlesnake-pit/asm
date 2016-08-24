@@ -4,6 +4,7 @@
 #include "stdlib.h"
 
 char* str_tokens[] = {
+  "HALT",
   "PRTCR",
   "PRTC",
   "PRTI",
@@ -160,6 +161,15 @@ void expected(char* s) {
   exit(1);
 }
 
-int isOp() {
-  return 0;
+int isOneByteOp() {
+  return token == HALT ||
+         token == PRINTLF ||
+         token == POP_TO_LOOP_INDEX ||
+        (token >= ADD && token <= MODULO);
 }
+
+int isOp() {
+  return isOneByteOp();
+}
+
+
