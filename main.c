@@ -2,6 +2,7 @@
 #include "stdio.h"
 
 int SD = 0; // symbol_def
+int PC = 0;
 void doVarDef() {
   next();
 }
@@ -16,7 +17,7 @@ void definitions() {
 }
 
 void doComment() {
-  printf("DOING COMMENT\n");
+  fprintf(stderr, "DOING COMMENT\n");
   matchString(";");
   while(token != ENDLINE) {
     next();
@@ -26,15 +27,17 @@ void doComment() {
 void doLabel() {
   next();
   matchString(":");
-  printf("DOING LABEL\n");
+  fprintf(stderr, "DOING LABEL\n");
 }
 
-void emitByte(char b) {
-  printf("wrote byte hex:%x dec:%d\n", b, b);
+void writeByte(char b) {
+  outBuffer[PC] = b;
+  fprintf(stderr, "wrote byte hex:%x dec:%d\n", b, b);
+  PC++;
 }
 
 void doOneByteOp() {
-  emitByte(token);
+  writeByte(token);
   next();
 }
 
@@ -63,8 +66,38 @@ void assembler() {
   statements();
 }
 
+void emitId() {
+  printf("(C)CHUNKUN");
+}
+
+void emitDS() {
+
+}
+
+void emitCS() {
+
+}
+
+void emitHeader() {
+  emitId();
+  emitDS();
+  emitCS();
+}
+
+void emitCode() {
+  for(int i = 0; i < PC; i++) {
+    printf("%c", outBuffer[i]);
+  }
+}
+
+void emitOutput() {
+  emitHeader();
+  emitCode();
+}
+
 int main() {
   init();
   assembler();
+  emitOutput();
   return 0;
 }
