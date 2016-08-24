@@ -29,23 +29,10 @@ void doLabel() {
   printf("DOING LABEL\n");
 }
 
-void doPush() {
-  matchString("PUSH");
-  printf("DOING PUSH\n");
-}
-
-void doPop() {
-  matchString("POP");
-  printf("DOING POP\n");
-}
 
 void doOp() {
   switch(token) {
-    case PUSH:
-      doPush();
       break;
-    case POP:
-      doPop();
       break;
     default:
       break;

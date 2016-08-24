@@ -161,5 +161,5 @@ void expected(char* s) {
 }
 
 int isOp() {
-  return token == PUSH || token == POP;
+  return 0;
 }
