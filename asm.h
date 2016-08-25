@@ -6,6 +6,17 @@
 #define VAROP 1
 #define KONSTANTOP 2
 
+#define CHAR 'c'
+#define INT 'i'
+#define FLOAT 'f'
+#define DOUBLE 'd'
+#define STRING 's'
+
+#define CHAR_SZ 1
+#define INT_SZ 4
+#define FLOAT_SZ 4
+#define DOUBLE_SZ 8
+
 enum TOKENS {
   HALT,
   PRINTLF,
@@ -68,6 +79,16 @@ enum TOKENS {
   COMPARE,
   COMMENT,
   ENDLINE,
+  DEFINE_CHAR,
+  DEFINE_INT,
+  DEFINE_FlOAT,
+  DEFINE_DOUBLE,
+  DEFINE_STRING,
+  DEFINE_ARRAY_CHAR,
+  DEFINE_ARRAY_INT,
+  DEFINE_ARRAY_FLOAT,
+  DEFINE_ARRAY_DOUBLE,
+  DEFINE_ARRAY_STRING,
   NAME,
   SYMBOL
 };
@@ -76,8 +97,8 @@ extern char* str_tokens[];
 extern int tokens_size;
 
 void getChar();
-int isVarDef(char c);
-int isArrayDef(char c);
+int isVarDef();
+int isArrayDef();
 int isOp();
 int isOneByteOp();
 void next();
@@ -85,10 +106,21 @@ void init();
 void scan();
 void matchString();
 void expected(char* s);
-int isDefinition(char c);
+void insertSymbol(char type);
+int isDefinition();
 enum TOKENS token;
 char look;
 char value[TMP_BUFFER_SIZE];
 char tmp[TMP_BUFFER_SIZE];
 char outBuffer [1000];
+
+struct symbol_row {
+  char name[100];
+  int start;
+  char type;
+};
+
+extern int DS; // symbol_def
+struct symbol_row symbol_table[100];
+extern int st_end;
 #endif

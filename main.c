@@ -1,11 +1,43 @@
 #include "asm.h"
 #include "stdio.h"
 
-int SD = 0; // symbol_def
 int PC = 0;
-void doVarDef() {
+int DS = 0;
+int st_end = 0;
+
+
+void doDef(char type, int type_sz) {
+  next();
+  if(token != NAME) {
+    expected("variable name");
+  }
+  fprintf(stderr, "Doing def %s of size %d \n", value, type_sz);
+  insertSymbol(type);
+  DS += type_sz;
   next();
 }
+
+void doVarDef() {
+  switch(token) {
+    case DEFINE_CHAR:
+      doDef(CHAR, CHAR_SZ);
+      break;
+    case DEFINE_INT:
+      doDef(INT, INT_SZ);
+      break;
+    case DEFINE_FlOAT:
+      doDef(FLOAT, FLOAT_SZ);
+      break;
+    case DEFINE_DOUBLE:
+      doDef(DOUBLE, DOUBLE_SZ);
+      break;
+    case DEFINE_STRING:
+      break;
+    default:
+      break;
+  }
+}
+
 void definitions() {
   while(isDefinition(token)) {
     if(isVarDef(token))
@@ -13,6 +45,7 @@ void definitions() {
     else if(isArrayDef(token)) {
 
     }
+    matchString("\n");
   }
 }
 
@@ -83,11 +116,13 @@ void emitId() {
 }
 
 void emitDS() {
-
+  fprintf(stderr, "Data segment size: %d\n", DS);
+  printf("%c%c",DS>>8,DS);
 }
 
 void emitCS() {
-
+  fprintf(stderr, "Code segment size: %d\n", PC);
+  printf("%c%c",PC>>8,PC);
 }
 
 void emitHeader() {
