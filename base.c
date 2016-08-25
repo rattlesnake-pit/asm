@@ -169,13 +169,13 @@ int isOneByteOp() {
 }
 
 int isKonstantOp(){
-    return token >= PUSH_CONSTANT_CHAR && <= PUSH_CONSTANT_STRING ||
-           token == STORE_CONSTANT_REGISTER
+    return token >= PUSH_CONSTANT_CHAR && token <= PUSH_CONSTANT_STRING ||
+           token == STORE_CONSTANT_REGISTER;
 }
 
 int isVarOp(){
-    return token >= PRINT_CHAR && <= PUSH_ARRAY_STRING ||
-           token >= POP_CHAR && <= DECREMENT
+    return token >= PRINT_CHAR && token <= PUSH_ARRAY_STRING ||
+           token >= POP_CHAR && token <= DECREMENT;
 }
 
 int isOp() {
