@@ -165,11 +165,28 @@ int isOneByteOp() {
   return token == HALT ||
          token == PRINTLF ||
          token == POP_TO_LOOP_INDEX ||
-        (token >= ADD && token <= MODULO);
+        (token >= ADD && token <= COMPARE); //COMPARE checks the values of the 2 places in the stack and adds it to a registry so that means it is a onebyteop as well
+}
+
+int isKonstantOp(){
+    return token >= PUSH_CONSTANT_CHAR && token <= PUSH_CONSTANT_STRING ||
+           token == STORE_CONSTANT_REGISTER;
+}
+
+int isVarOp(){
+    return token >= PRINT_CHAR && token <= PUSH_ARRAY_STRING ||
+           token >= POP_CHAR && token <= DECREMENT;
 }
 
 int isOp() {
-  return isOneByteOp();
+  if(isOneByteOp()){
+      return BYTEOP;
+  }
+  if(isKonstantOp()){
+      return KONSTANTOP;
+  }
+  if(isVarOp()){
+      return VAROP;
+  }
+  return -1;
 }
-
-

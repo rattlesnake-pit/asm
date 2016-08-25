@@ -41,10 +41,12 @@ void doOneByteOp() {
   next();
 }
 
-void doOp() {
-  if(isOneByteOp()) {
-    doOneByteOp();
-  }
+void doVarOp(){
+    //TODO: implement doOp with variables
+}
+
+void doKonstantOp(){
+    //TODO: implement doOp with constants
 }
 
 void statements() {
@@ -52,8 +54,18 @@ void statements() {
     if(token == NAME) {
       doLabel();
     }
-    if(isOp()) {
-      doOp();
+    switch (isOp()) {
+        case BYTEOP:
+            doOneByteOp();
+            break;
+        case VAROP:
+            doVarOp();
+            break;
+        case KONSTANTOP:
+            doKonstantOp();
+            break;
+        default:
+            break;
     }
     if(token == COMMENT) {
       doComment();
