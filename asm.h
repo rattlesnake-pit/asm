@@ -2,6 +2,9 @@
 #define ASM_H
 
 #define TMP_BUFFER_SIZE 100
+#define BYTEOP 0
+#define VAROP 1
+#define KONSTANTOP 2
 
 enum TOKENS {
   HALT,

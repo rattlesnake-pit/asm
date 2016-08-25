@@ -55,13 +55,13 @@ void statements() {
       doLabel();
     }
     switch (isOp()) {
-        case 0:
+        case BYTEOP:
             doOneByteOp();
             break;
-        case 1:
+        case VAROP:
             doVarOp();
             break;
-        case 2:
+        case KONSTANTOP:
             doKonstantOp();
             break;
         default:
