@@ -168,8 +168,27 @@ int isOneByteOp() {
         (token >= ADD && token <= MODULO);
 }
 
-int isOp() {
-  return isOneByteOp();
+int isKonstantOp(){
+    //TODO: implement isKonstantOp()
+    return false;
 }
 
+int isVarOp(){
+    //TODO: implement isVarOp()
+    return false;
+}
 
+int isOp() {
+  if(isOneByteOp()){
+      return 0;
+  }
+  if(isKonstantOp()){
+      return 2;
+  }
+  if(isVarOp()){
+      return 1;
+  }
+  else{
+      return -1;
+  }
+}
