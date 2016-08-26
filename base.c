@@ -64,10 +64,29 @@ char* str_tokens[] = {
   "MOD",
   "CMP",
   ";",
-  "\n"
+  "\n",
+  "DEFC",
+  "DEFI",
+  "DEFF",
+  "DEFD",
+  "DEFS",
+  "DEFAC",
+  "DEFAI",
+  "DEFAF",
+  "DEFAD",
+  "DEFAS"
 };
 
 int tokens_size = sizeof str_tokens / sizeof *str_tokens;
+
+void insertSymbol(char type) {
+  struct symbol_row row;
+  strcpy(row.name, value);
+  row.start = DS;
+  row.type = type;
+  symbol_table[st_end] = row;
+  st_end++;
+}
 
 void scan() {
   for(int i = 0; i < tokens_size; i++) {
@@ -139,16 +158,16 @@ void init() {
   next();
 }
 
-int isVarDef(char c) {
-  return c == 'v';
+int isVarDef() {
+  return token >= DEFINE_CHAR && token <= DEFINE_STRING;
 }
 
-int isArrayDef(char c) {
-  return c == 'a';
+int isArrayDef() {
+  return token >= DEFINE_ARRAY_CHAR && token <= DEFINE_ARRAY_STRING;
 }
 
-int isDefinition(char c) {
-  return isVarDef(c) || isArrayDef(c);
+int isDefinition() {
+  return isVarDef() || isArrayDef();
 }
 
 void println(char* s) {
