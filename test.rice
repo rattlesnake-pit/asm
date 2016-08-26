@@ -4,6 +4,7 @@ deff medina
 defd JL
 label:
 add
+rdf medina
 halt
 label1: popx
 label2: prtcr

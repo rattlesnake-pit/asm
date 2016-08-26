@@ -79,6 +79,15 @@ char* str_tokens[] = {
 
 int tokens_size = sizeof str_tokens / sizeof *str_tokens;
 
+int findAddress(char *value){
+    for(int i = 0; i < st_end; i++){
+        if(strcmp(symbol_table[i].name,value) == 0){
+            return symbol_table[i].start;
+        }
+    }
+    return -1;
+}
+
 void insertSymbol(char type) {
   struct symbol_row row;
   strcpy(row.name, value);
@@ -137,6 +146,17 @@ void getName() {
   token = NAME;
 }
 
+void getNum(){
+    int i = 0;
+    while(isNum(look)){
+        value[i] = look;
+        i++;
+        getChar();
+    }
+    value[i] = '\0';
+    token = NUMBER;
+}
+
 void handleWhite() {
   while(look == ' ') getChar();
 }
@@ -144,7 +164,11 @@ void next() {
   handleWhite();
   if(isAlpha(look)) {
     getName();
-  } else {
+  }
+  else if(isNum(look)) {
+    getNum();
+  }
+  else {
     value[0] = look;
     value[1] = '\0';
     getChar();

@@ -69,18 +69,34 @@ void writeByte(char b) {
   PC++;
 }
 
+void writeAddress(int a) {
+    writeByte(a>>8);
+    writeByte(a);
+    fprintf(stderr, "wrote 2 bytes\n");
+}
+
 void doOneByteOp() {
   writeByte(token);
   next();
 }
 
 void doVarOp(){
-    //TODO: implement doOp with variables
+    writeByte(token);
+    next(); //so would this let me have the new token?
+    int address = findAddress(value);
+    if(address != -1) {
+        writeAddress(address);
+        next();
+    }
+    else{
+        expected("WE FUCKED UP THERE'S NO ADDRESSS");
+    }
 }
 
 void doKonstantOp(){
     //TODO: implement doOp with constants
 }
+
 
 void statements() {
   while(look != EOF) {
