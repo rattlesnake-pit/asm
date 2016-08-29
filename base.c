@@ -79,7 +79,7 @@ char* str_tokens[] = {
 
 int tokens_size = sizeof str_tokens / sizeof *str_tokens;
 
-int findAddress(char *value){
+int findVariableAddress(char *value){
     for(int i = 0; i < st_end; i++){
         if(strcmp(symbol_table[i].name,value) == 0){
             return symbol_table[i].start;

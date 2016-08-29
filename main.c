@@ -83,7 +83,7 @@ void doOneByteOp() {
 void doVarOp(){
     writeByte(token);
     next(); //so would this let me have the new token?
-    int address = findAddress(value);
+    int address = findVariableAddress(value);
     if(address != -1) {
         writeAddress(address);
         next();
