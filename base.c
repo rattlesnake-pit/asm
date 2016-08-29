@@ -88,12 +88,29 @@ int findVariableAddress(char *value){
   return -1;
 }
 
+void insertPendingLabel() {
+  struct label_row row;
+  row.address = PC;
+  strcpy(row.name, value);
+  pending_label_table[pending_end] = row;
+  pending_end++;
+}
+
 void insertLabel() {
   struct label_row row;
   strcpy(row.name, value);
   row.address = PC;
   label_table[lt_end] = row;
   lt_end++;
+}
+
+int findLabelAddress(char* label) {
+  for(int i = 0; i < lt_end; i++) {
+    if(strcmp(label_table[i].name, label) == 0) {
+      return label_table[i].address;
+    }
+  }
+  return NOT_FOUND;
 }
 
 void insertSymbol(char type) {
@@ -206,11 +223,16 @@ void println(char* s) {
   printf("%s\n", s);
 }
 
-void expected(char* s) {
-  sprintf(tmp, "EXPECTED '%s'" , s);
-  println(tmp);
+void error(char* s) {
+  println(s);
   exit(1);
 }
+
+void expected(char* s) {
+  sprintf(tmp, "EXPECTED '%s'" , s);
+  error(tmp);
+}
+
 
 int isOneByteOp() {
   return token == HALT ||
@@ -219,25 +241,32 @@ int isOneByteOp() {
         (token >= ADD && token <= COMPARE); //COMPARE checks the values of the 2 places in the stack and adds it to a registry so that means it is a onebyteop as well
 }
 
-int isKonstantOp(){
-    return token >= PUSH_CONSTANT_CHAR && token <= PUSH_CONSTANT_STRING ||
+int isKonstantOp() {
+  return token >= PUSH_CONSTANT_CHAR && token <= PUSH_CONSTANT_STRING ||
            token == STORE_CONSTANT_REGISTER;
 }
 
-int isVarOp(){
-    return token >= PRINT_CHAR && token <= PUSH_ARRAY_STRING ||
-           token >= POP_CHAR && token <= DECREMENT;
+int isVarOp() {
+  return token >= PRINT_CHAR && token <= PUSH_ARRAY_STRING ||
+         token >= POP_CHAR && token <= READ_ARRAY_STRING ||
+         token >= STORE_REGISTER && token <= DECREMENT;
 }
 
+int isJump() {
+  return token >= JUMP && token <= JUMP_LOWER_EQUAL;
+}
 int isOp() {
-  if(isOneByteOp()){
-      return BYTEOP;
+  if(isOneByteOp()) {
+    return BYTEOP;
   }
-  if(isKonstantOp()){
-      return KONSTANTOP;
+  if(isKonstantOp()) {
+    return KONSTANTOP;
   }
-  if(isVarOp()){
-      return VAROP;
+  if(isVarOp()) {
+    return VAROP;
+  }
+  if(isJump()) {
+    return JUMPOP;
   }
   return -1;
 }
