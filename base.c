@@ -80,12 +80,19 @@ char* str_tokens[] = {
 int tokens_size = sizeof str_tokens / sizeof *str_tokens;
 
 int findVariableAddress(char *value){
-    for(int i = 0; i < st_end; i++){
-        if(strcmp(symbol_table[i].name,value) == 0){
-            return symbol_table[i].start;
-        }
+  for(int i = 0; i < st_end; i++){
+    if(strcmp(symbol_table[i].name,value) == 0){
+      return symbol_table[i].start;
     }
-    return -1;
+  }
+  return -1;
+}
+void insertLabel() {
+  struct label_row row;
+  strcpy(row.name, value);
+  row.address = PC;
+  label_table[lt_end] = row;
+  lt_end++;
 }
 
 void insertSymbol(char type) {

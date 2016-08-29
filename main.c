@@ -4,6 +4,7 @@
 int PC = 0;
 int DS = 0;
 int st_end = 0;
+int lt_end = 0;
 
 
 void doDef(char type, int type_sz) {
@@ -58,9 +59,10 @@ void doComment() {
 }
 
 void doLabel() {
+  insertLabel();
+  fprintf(stderr, "DOING LABEL %s with PC: %d \n", value, PC);
   next();
   matchString(":");
-  fprintf(stderr, "DOING LABEL\n");
 }
 
 void writeByte(char b) {
