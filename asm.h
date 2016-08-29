@@ -90,7 +90,8 @@ enum TOKENS {
   DEFINE_ARRAY_DOUBLE,
   DEFINE_ARRAY_STRING,
   NAME,
-  SYMBOL
+  SYMBOL,
+  NUMBER
 };
 
 extern char* str_tokens[];
@@ -101,6 +102,7 @@ int isVarDef();
 int isArrayDef();
 int isOp();
 int isOneByteOp();
+int findAddress();
 void next();
 void init();
 void scan();
