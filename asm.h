@@ -107,6 +107,7 @@ void scan();
 void matchString();
 void expected(char* s);
 void insertSymbol(char type);
+void insertLabel();
 int isDefinition();
 enum TOKENS token;
 char look;
@@ -120,7 +121,15 @@ struct symbol_row {
   char type;
 };
 
+struct label_row {
+  char name[100];
+  int address;
+};
+
 extern int DS; // symbol_def
+extern int PC;
 struct symbol_row symbol_table[100];
+struct label_row label_table[100];
 extern int st_end;
+extern int lt_end;
 #endif

@@ -79,6 +79,14 @@ char* str_tokens[] = {
 
 int tokens_size = sizeof str_tokens / sizeof *str_tokens;
 
+void insertLabel() {
+  struct label_row row;
+  strcpy(row.name, value);
+  row.address = PC;
+  label_table[lt_end] = row;
+  lt_end++;
+}
+
 void insertSymbol(char type) {
   struct symbol_row row;
   strcpy(row.name, value);
