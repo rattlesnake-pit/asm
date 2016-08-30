@@ -5,13 +5,15 @@ defd JL
 label:
 add
 rdf medina
-halt
+jmp label
 label1: popx
 label2: prtcr
 ;comment
+jmpne label33
 label3: sub ;comment
 ;asdfasdfasdf
 mul
 label33:
 div
 mod
+halt

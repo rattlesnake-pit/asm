@@ -5,6 +5,7 @@ int PC = 0;
 int DS = 0;
 int st_end = 0;
 int lt_end = 0;
+int pending_end = 0;
 
 
 void doDef(char type, int type_sz) {
@@ -95,10 +96,31 @@ void doVarOp(){
     }
 }
 
-void doKonstantOp(){
+void doKonstantOp() {
     //TODO: implement doOp with constants
 }
 
+void doJump() {
+  writeByte(token);
+  next();
+  if(token != NAME) {
+    expected("Variable name");
+  }
+  int address = findLabelAddress(value);
+  if(address == NOT_FOUND) {
+    fprintf(stderr, "storing label %s with PC %d to resolve later\n", value, PC);
+    insertPendingLabel();
+    writeByte(0xFF);
+    writeByte(0xFF);
+  }
+  else {
+    fprintf(stderr, "jumping to label %s at address %d\n", value, address);
+    writeByte(address>>8);
+    writeByte(address);
+  }
+  next();
+
+}
 
 void statements() {
   while(look != EOF) {
@@ -114,6 +136,9 @@ void statements() {
             break;
         case KONSTANTOP:
             doKonstantOp();
+            break;
+        case JUMPOP:
+            doJump();
             break;
         default:
             break;
@@ -160,9 +185,25 @@ void emitOutput() {
   emitCode();
 }
 
+void resolvePendingLabels() {
+  for(int i = 0; i < pending_end; i++) {
+    int address = findLabelAddress(pending_label_table[i].name);
+    if(address == NOT_FOUND) {
+      sprintf(tmp, "LABEL '%s' NOT FOUND", pending_label_table[i].name);
+      error(tmp);
+    }
+    int pc = pending_label_table[i].address;
+    fprintf(stderr, "resolved label %s with pc: %d to address %d\n",
+        pending_label_table[i].name, pc, address);
+    outBuffer[pc] = address >> 8;
+    outBuffer[pc+1] = address;
+  }
+}
+
 int main() {
   init();
   assembler();
+  resolvePendingLabels();
   emitOutput();
   return 0;
 }

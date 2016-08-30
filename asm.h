@@ -2,9 +2,13 @@
 #define ASM_H
 
 #define TMP_BUFFER_SIZE 100
+
+#define NOT_FOUND -1
+
 #define BYTEOP 0
 #define VAROP 1
 #define KONSTANTOP 2
+#define JUMPOP 3
 
 #define CHAR 'c'
 #define INT 'i'
@@ -107,10 +111,13 @@ void next();
 void init();
 void scan();
 void matchString();
+void error(char *s);
 void expected(char* s);
 int findVariableAddress(char* s);
 void insertSymbol(char type);
 void insertLabel();
+int findLabelAddress(char* label);
+void insertPendingLabel();
 int isDefinition();
 enum TOKENS token;
 char look;
@@ -133,6 +140,8 @@ extern int DS; // symbol_def
 extern int PC;
 struct symbol_row symbol_table[100];
 struct label_row label_table[100];
+struct label_row pending_label_table[100];
 extern int st_end;
 extern int lt_end;
+extern int pending_end;
 #endif
