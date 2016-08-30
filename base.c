@@ -87,6 +87,7 @@ int findVariableAddress(char *value){
   }
   return -1;
 }
+
 void insertLabel() {
   struct label_row row;
   strcpy(row.name, value);
