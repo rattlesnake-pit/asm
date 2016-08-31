@@ -233,6 +233,48 @@ void expected(char* s) {
   error(tmp);
 }
 
+char* intToChar (int x){
+    char* c = malloc(4);
+    for(int i = 3; i >= 0; i--)
+    {
+        x = x >> 8;
+        c[i] = (char) x;
+    }
+    return c;
+}
+
+char* floatToChar(float f){
+    int x = *(int*)&f;
+    return intToChar(x);
+}
+
+char* llToChar(long long x){
+    char *c = malloc(sizeof(long long));
+    for(int i = sizeof(long long); i >= 0; i--){
+        x = x >> 8;
+        c[i] = (char) x;
+    }
+    return c;
+}
+
+char* longToChar(long x){
+    char *c = malloc(sizeof(long));
+    for(int i = sizeof(long); i >= 0; i--){
+        x = x >> 8;
+        c[i] = (char)x;
+    }
+}
+
+char* doubleToChar(double x){
+    if(sizeof(double) == sizeof(long long)){
+        long long z = *(long long*)&x;
+        return llToChar(x);
+    }
+    if(sizeof(double) == sizeof(long)){
+        long y = *(long*)&x;
+        return longToChar(x);
+    }
+}
 
 int isOneByteOp() {
   return token == HALT ||

@@ -1,5 +1,7 @@
 #include "asm.h"
 #include "stdio.h"
+#include "stdlib.h"
+#include "string.h"
 
 int PC = 0;
 int DS = 0;
@@ -72,21 +74,27 @@ void writeByte(char b) {
   PC++;
 }
 
+void writeString(char *val){
+    for(size_t i = 0; i < strlen(val); i++){
+        writeByte(val[i]);
+    }
+}
+
 void writeInt(int val){
-    //TODO: implement writeInt
+    writeString(intToChar(val));
 }
 
 void writeFloat(float val){
-    //TODO: implement writeFloat
+    writeString(floatToChar(val));
 }
 
 void writeDouble(double val){
-    //TODO: implement writeDouble
+    writeString(doubleToChar(val));
 }
 
-//this might just call writeByte on a loop, not 100% sure either, have to check
-void writeString(char *val){
-    //TODO: implement writeString
+void writeSize(char *val){
+    int size = strlen(val);
+    writeInt(size);
 }
 
 void writeAddress(int a) {
@@ -117,7 +125,7 @@ void addKchar(){
     if(strlen(value) != 1){
         expected("it's bigger than it's supposed to");
     }
-    if(!isAlphaNum(value))
+    if(!isAlphaNum(value))//it returns int but im assuming this works because it returns 0 or 1
     {
         expected("it's neither a number or a letter");
     }
@@ -161,6 +169,11 @@ void addKstring(){
     if(token != NAME){
         expected("this is not a string");
     }
+    /*idk if i have to write the size of the string
+    if it is it will be 1 byte for the instruction
+    4 bytes for the size of the string
+    and n bytes for the actual string */
+    writeSize(value);
     writeString(value);
     next();
 }
@@ -196,6 +209,7 @@ void doKonstantOp() {
             break;
         default:
             expected("WE FUCKED UP IT'S NOT A CONSTANT");
+        }
 }
 
 void doJump() {
