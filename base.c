@@ -113,13 +113,14 @@ int findLabelAddress(char* label) {
   return NOT_FOUND;
 }
 
-void insertSymbol(char type) {
+void insertSymbol(char type, int type_sz, char* name) {
   struct symbol_row row;
-  strcpy(row.name, value);
+  strcpy(row.name, name);
   row.start = DS;
   row.type = type;
   symbol_table[st_end] = row;
   st_end++;
+  DS += type_sz;
 }
 
 void scan() {

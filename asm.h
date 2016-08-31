@@ -115,7 +115,7 @@ void matchString();
 void error(char *s);
 void expected(char* s);
 int findVariableAddress(char* s);
-void insertSymbol(char type);
+void insertSymbol(char type, int type_sz, char* name);
 void insertLabel();
 int findLabelAddress(char* label);
 void insertPendingLabel();
