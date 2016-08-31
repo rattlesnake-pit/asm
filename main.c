@@ -101,8 +101,7 @@ void doOneByteOp() {
 }
 
 void doVarOp(){
-    writeByte(token);
-    next(); //so would this let me have the new token?
+    doOneByteOp();
     int address = findVariableAddress(value);
     if(address != -1) {
         writeAddress(address);
@@ -170,35 +169,29 @@ void addKstring(){
 void doKonstantOp() {
     switch(token){
         case PUSH_CONSTANT_CHAR:
-            writeByte(token);
-            next();
+            doOneByteOp();
             addKchar();
             break;
         case PUSH_CONSTANT_INT:
-            writeByte(token);
-            next();
+            doOneByteOp();
             addKint();
             break;
         case PUSH_CONSTANT_FLOAT:
-            writeByte(token);
-            next();
+            doOneByteOp();
             addKfloat();
             break;
         case PUSH_CONSTANT_DOUBLE:
-            writeByte(token);
-            next();
+            doOneByteOp();
             addKdouble();
             break;
         case PUSH_CONSTANT_STRING:
-            writeByte(token);
-            next();
+            doOneByteOp();
             addKstring();
             break;
         case STORE_CONSTANT_REGISTER:
             //maybe make pushcontantint and this one the same
             //I'm not 100% sure it should do the exact same
-            writeByte(token);
-            next();
+            doOneByteOp();
             addKint();
             break;
         default:
