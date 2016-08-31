@@ -72,6 +72,23 @@ void writeByte(char b) {
   PC++;
 }
 
+void writeInt(int val){
+    //TODO: implement writeInt
+}
+
+void writeFloat(float val){
+    //TODO: implement writeFloat
+}
+
+void writeDouble(double val){
+    //TODO: implement writeDouble
+}
+
+//this might just call writeByte on a loop, not 100% sure either, have to check
+void writeString(char *val){
+    //TODO: implement writeString
+}
+
 void writeAddress(int a) {
     writeByte(a>>8);
     writeByte(a);
@@ -96,8 +113,96 @@ void doVarOp(){
     }
 }
 
+void addKchar(){
+    matchString("'");
+    if(strlen(value) != 1){
+        expected("it's bigger than it's supposed to");
+    }
+    if(!isAlphaNum(value))
+    {
+        expected("it's neither a number or a letter");
+    }
+    writeByte(value[0]);
+    matchString("'");
+    next();
+}
+
+void addKint(){
+    if(token != NUMBER){
+        expected("NaN");
+    }
+    int intValue = atoi(value);
+    writeInt(intValue);//TODO: implement writeInt function
+    next();
+}
+
+void addKfloat(){
+    if(token != NUMBER){
+        expected("NaN or float");
+    }
+    float floatValue = (float)atof(value); //THIS IS NOT FROM STRING TO FLAOT THIS DOES STRING TO DOUBLE FIND THE CORRECT ONE
+    writeFloat(floatValue);//TODO: implement writeFloat function
+    next();
+}
+
+void addKdouble(){
+    if(token != NUMBER){
+        expected("NaD");
+    }
+    double doubleValue = atof(value);
+    writeDouble(doubleValue);//TODO: implement writeDouble function
+    next();
+}
+
+void addKstring(){
+    matchString("\"");
+    if(strlen(value) > 40){
+        expected("string is too long");
+    }
+    if(token != NAME){
+        expected("this is not a string");
+    }
+    writeString(value);
+    next();
+}
+
+//n'  value = '
 void doKonstantOp() {
-    //TODO: implement doOp with constants
+    switch(token){
+        case PUSH_CONSTANT_CHAR:
+            writeByte(token);
+            next();
+            addKchar();
+            break;
+        case PUSH_CONSTANT_INT:
+            writeByte(token);
+            next();
+            addKint();
+            break;
+        case PUSH_CONSTANT_FLOAT:
+            writeByte(token);
+            next();
+            addKfloat();
+            break;
+        case PUSH_CONSTANT_DOUBLE:
+            writeByte(token);
+            next();
+            addKdouble();
+            break;
+        case PUSH_CONSTANT_STRING:
+            writeByte(token);
+            next();
+            addKstring();
+            break;
+        case STORE_CONSTANT_REGISTER:
+            //maybe make pushcontantint and this one the same
+            //I'm not 100% sure it should do the exact same
+            writeByte(token);
+            next();
+            addKint();
+            break;
+        default:
+            expected("WE FUCKED UP IT'S NOT A CONSTANT");
 }
 
 void doJump() {
