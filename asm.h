@@ -95,7 +95,8 @@ enum TOKENS {
   DEFINE_ARRAY_STRING,
   NAME,
   SYMBOL,
-  NUMBER
+  NUMBER,
+  DECIMAL
 };
 
 extern char* str_tokens[];

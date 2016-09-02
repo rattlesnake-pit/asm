@@ -81,20 +81,37 @@ void writeString(char *val){
 }
 
 void writeInt(int val){
-    writeString(intToChar(val));
+    for(int i = 24; i >= 0; i -= 8){
+        writeByte(val >> i);
+    }
+    //writeString(intToChar(val));
 }
 
 void writeFloat(float val){
-    writeString(floatToChar(val));
+    int x = *(int*)&val;
+    writeInt(x);
+    //writeString(floatToChar(val));
+}
+
+void writell(long long val){
+    for(int i = 58; i >= 0; i -= 8){
+        writeByte(val >> i);
+    }
 }
 
 void writeDouble(double val){
-    writeString(doubleToChar(val));
+    long long x = *(long long*)&val;
+    writell(x);
+    //writeString(doubleToChar(val));
 }
 
 void writeSize(char *val){
     int size = strlen(val);
-    writeInt(size);
+    if(size > 255){
+        error("string too long");
+    }
+    unsigned char len = strlen(val);
+    writeByte(len);
 }
 
 void writeAddress(int a) {
@@ -116,7 +133,7 @@ void doVarOp(){
         next();
     }
     else{
-        expected("WE FUCKED UP THERE'S NO ADDRESSS");
+        error("WE FUCKED UP THERE'S NO ADDRESSS");
     }
 }
 
@@ -139,7 +156,7 @@ void addKint(){
         expected("NaN");
     }
     int intValue = atoi(value);
-    writeInt(intValue);//TODO: implement writeInt function
+    writeInt(intValue);
     next();
 }
 
@@ -169,10 +186,6 @@ void addKstring(){
     if(token != NAME){
         expected("this is not a string");
     }
-    /*idk if i have to write the size of the string
-    if it is it will be 1 byte for the instruction
-    4 bytes for the size of the string
-    and n bytes for the actual string */
     writeSize(value);
     writeString(value);
     next();

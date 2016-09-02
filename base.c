@@ -171,7 +171,7 @@ void getName() {
   token = NAME;
 }
 
-void getNum(){
+void getNum() {
     int i = 0;
     while(isNum(look)){
         value[i] = look;
@@ -233,7 +233,7 @@ void expected(char* s) {
   error(tmp);
 }
 
-char* intToChar (int x){
+char* intToChar (int x) {
     char* c = malloc(4);
     for(int i = 3; i >= 0; i--)
     {
@@ -243,12 +243,12 @@ char* intToChar (int x){
     return c;
 }
 
-char* floatToChar(float f){
+char* floatToChar(float f) {
     int x = *(int*)&f;
     return intToChar(x);
 }
 
-char* llToChar(long long x){
+char* llToChar(long long x) {
     char *c = malloc(sizeof(long long));
     for(int i = sizeof(long long); i >= 0; i--){
         x = x >> 8;
@@ -257,7 +257,7 @@ char* llToChar(long long x){
     return c;
 }
 
-char* longToChar(long x){
+char* longToChar(long x) {
     char *c = malloc(sizeof(long));
     for(int i = sizeof(long); i >= 0; i--){
         x = x >> 8;
@@ -265,7 +265,7 @@ char* longToChar(long x){
     }
 }
 
-char* doubleToChar(double x){
+char* doubleToChar(double x) {
     if(sizeof(double) == sizeof(long long)){
         long long z = *(long long*)&x;
         return llToChar(x);
