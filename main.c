@@ -16,8 +16,25 @@ void doDef(char type, int type_sz) {
     expected("variable name");
   }
   fprintf(stderr, "Doing def %s of size %d \n", value, type_sz);
-  insertSymbol(type);
-  DS += type_sz;
+  insertSymbol(type, type_sz, value);
+  next();
+}
+
+void doArrDef(char type, int type_sz) {
+  next();
+  if(token != NAME) {
+    expected("variable name");
+  }
+  char name[100];
+  strcpy(name, value);
+  next();
+  matchString(",");
+  if(token != NUMBER) {
+    expected("array size");
+  }
+  int size = atoi(value);
+
+  insertSymbol(type, type_sz * size, name);
   next();
 }
 
@@ -42,12 +59,34 @@ void doVarDef() {
   }
 }
 
+void doArrayDef() {
+  switch(token) {
+    case DEFINE_ARRAY_CHAR:
+      doArrDef(CHAR, CHAR_SZ);
+      break;
+    case DEFINE_ARRAY_INT:
+      doArrDef(INT, INT_SZ);
+      break;
+    case DEFINE_ARRAY_FLOAT:
+      doArrDef(FLOAT, FLOAT_SZ);
+      break;
+    case DEFINE_ARRAY_DOUBLE:
+      doArrDef(DOUBLE, DOUBLE_SZ);
+      break;
+    case DEFINE_ARRAY_STRING:
+      break;
+    default:
+      break;
+
+  }
+}
+
 void definitions() {
   while(isDefinition(token)) {
     if(isVarDef(token))
       doVarDef();
     else if(isArrayDef(token)) {
-
+      doArrayDef();
     }
     matchString("\n");
   }

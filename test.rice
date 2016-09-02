@@ -1,7 +1,7 @@
 defc tony
 defi prueba
 deff medina
-defd JL
+defad JL, 10
 label:
 pushkc 'a'
 pushks "hola"
