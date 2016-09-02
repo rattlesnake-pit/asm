@@ -3,6 +3,10 @@ defi prueba
 deff medina
 defd JL
 label:
+pushkc 'a'
+pushks "hola"
+pushki 255
+pushkf 2
 add
 rdf medina
 jmp label

@@ -171,7 +171,7 @@ void getName() {
   token = NAME;
 }
 
-void getNum(){
+void getNum() {
     int i = 0;
     while(isNum(look)){
         value[i] = look;
@@ -232,7 +232,6 @@ void expected(char* s) {
   sprintf(tmp, "EXPECTED '%s'" , s);
   error(tmp);
 }
-
 
 int isOneByteOp() {
   return token == HALT ||

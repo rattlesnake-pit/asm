@@ -95,7 +95,8 @@ enum TOKENS {
   DEFINE_ARRAY_STRING,
   NAME,
   SYMBOL,
-  NUMBER
+  NUMBER,
+  DECIMAL
 };
 
 extern char* str_tokens[];
@@ -119,6 +120,12 @@ void insertLabel();
 int findLabelAddress(char* label);
 void insertPendingLabel();
 int isDefinition();
+int isAlphaNum(char c);
+char* floatToChar(float f);
+char* llToChar(long long x);
+char* longToChar(long x);
+char* intToChar(int x);
+char* doubleToChar(double x);
 enum TOKENS token;
 char look;
 char value[TMP_BUFFER_SIZE];

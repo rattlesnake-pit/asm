@@ -1,5 +1,7 @@
 #include "asm.h"
 #include "stdio.h"
+#include "stdlib.h"
+#include "string.h"
 
 int PC = 0;
 int DS = 0;
@@ -66,10 +68,50 @@ void doLabel() {
   matchString(":");
 }
 
-void writeByte(char b) {
+void writeByte(unsigned char b) {
   outBuffer[PC] = b;
   fprintf(stderr, "wrote byte hex:%x dec:%d\n", b, b);
   PC++;
+}
+
+void writeString(char *val){
+    for(size_t i = 0; i < strlen(val); i++){
+        writeByte(val[i]);
+    }
+}
+
+void writeInt(int val){
+    for(int i = 24; i >= 0; i -= 8){
+        writeByte(val >> i);
+    }
+    //writeString(intToChar(val));
+}
+
+void writeFloat(float val){
+    int x = *(int*)&val;
+    writeInt(x);
+    //writeString(floatToChar(val));
+}
+
+void writell(long long val){
+    for(int i = 58; i >= 0; i -= 8){
+        writeByte(val >> i);
+    }
+}
+
+void writeDouble(double val){
+    long long x = *(long long*)&val;
+    writell(x);
+    //writeString(doubleToChar(val));
+}
+
+void writeSize(char *val){
+    int size = strlen(val);
+    if(size > 255){
+        error("string too long");
+    }
+    unsigned char len = strlen(val);
+    writeByte(len);
 }
 
 void writeAddress(int a) {
@@ -84,20 +126,104 @@ void doOneByteOp() {
 }
 
 void doVarOp(){
-    writeByte(token);
-    next(); //so would this let me have the new token?
+    doOneByteOp();
     int address = findVariableAddress(value);
     if(address != -1) {
         writeAddress(address);
         next();
     }
     else{
-        expected("WE FUCKED UP THERE'S NO ADDRESSS");
+        error("WE FUCKED UP THERE'S NO ADDRESSS");
     }
 }
 
+void addKchar(){
+    matchString("'");
+    if(strlen(value) != 1){
+        expected("it's bigger than it's supposed to");
+    }
+    if(!isAlphaNum(value[0]))//it returns int but im assuming this works because it returns 0 or 1
+    {
+        expected("it's neither a number or a letter");
+    }
+    writeByte(value[0]);
+    next();
+    matchString("'");
+}
+
+void addKint(){
+    if(token != NUMBER){
+        expected("NaN");
+    }
+    int intValue = atoi(value);
+    writeInt(intValue);
+    next();
+}
+
+void addKfloat(){
+    if(token != NUMBER){
+        expected("NaN or float");
+    }
+    float floatValue = (float)atof(value); //THIS IS NOT FROM STRING TO FLAOT THIS DOES STRING TO DOUBLE FIND THE CORRECT ONE
+    writeFloat(floatValue);//TODO: implement writeFloat function
+    next();
+}
+
+void addKdouble(){
+    if(token != NUMBER){
+        expected("NaD");
+    }
+    double doubleValue = atof(value);
+    writeDouble(doubleValue);//TODO: implement writeDouble function
+    next();
+}
+
+void addKstring(){
+    matchString("\"");
+    if(strlen(value) > 40){
+        expected("string is too long");
+    }
+    if(token != NAME){
+        expected("this is not a string");
+    }
+    writeSize(value);
+    writeString(value);
+    next();
+    matchString("\"");
+}
+
+//n'  value = '
 void doKonstantOp() {
-    //TODO: implement doOp with constants
+    switch(token){
+        case PUSH_CONSTANT_CHAR:
+            doOneByteOp();
+            addKchar();
+            break;
+        case PUSH_CONSTANT_INT:
+            doOneByteOp();
+            addKint();
+            break;
+        case PUSH_CONSTANT_FLOAT:
+            doOneByteOp();
+            addKfloat();
+            break;
+        case PUSH_CONSTANT_DOUBLE:
+            doOneByteOp();
+            addKdouble();
+            break;
+        case PUSH_CONSTANT_STRING:
+            doOneByteOp();
+            addKstring();
+            break;
+        case STORE_CONSTANT_REGISTER:
+            //maybe make pushcontantint and this one the same
+            //I'm not 100% sure it should do the exact same
+            doOneByteOp();
+            addKint();
+            break;
+        default:
+            expected("WE FUCKED UP IT'S NOT A CONSTANT");
+        }
 }
 
 void doJump() {
