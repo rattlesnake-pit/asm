@@ -68,7 +68,7 @@ void doLabel() {
   matchString(":");
 }
 
-void writeByte(char b) {
+void writeByte(unsigned char b) {
   outBuffer[PC] = b;
   fprintf(stderr, "wrote byte hex:%x dec:%d\n", b, b);
   PC++;
@@ -142,13 +142,13 @@ void addKchar(){
     if(strlen(value) != 1){
         expected("it's bigger than it's supposed to");
     }
-    if(!isAlphaNum(value))//it returns int but im assuming this works because it returns 0 or 1
+    if(!isAlphaNum(value[0]))//it returns int but im assuming this works because it returns 0 or 1
     {
         expected("it's neither a number or a letter");
     }
     writeByte(value[0]);
-    matchString("'");
     next();
+    matchString("'");
 }
 
 void addKint(){
@@ -189,6 +189,7 @@ void addKstring(){
     writeSize(value);
     writeString(value);
     next();
+    matchString("\"");
 }
 
 //n'  value = '

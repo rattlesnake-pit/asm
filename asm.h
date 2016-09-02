@@ -120,6 +120,7 @@ void insertLabel();
 int findLabelAddress(char* label);
 void insertPendingLabel();
 int isDefinition();
+int isAlphaNum(char c);
 char* floatToChar(float f);
 char* llToChar(long long x);
 char* longToChar(long x);
