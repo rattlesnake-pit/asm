@@ -221,7 +221,7 @@ int isDefinition() {
 }
 
 void println(char* s) {
-  printf("%s\n", s);
+  fprintf(stderr, "%s\n", s);
 }
 
 void error(char* s) {
