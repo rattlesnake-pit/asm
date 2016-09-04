@@ -38,6 +38,47 @@ void doArrDef(char type, int type_sz) {
   next();
 }
 
+void doDefString() {
+  next();
+  if(token != NAME) {
+    expected("variable name");
+  }
+  char name[100];
+  strcpy(name, value);
+  next();
+  matchString(",");
+  if(token != NUMBER) {
+    expected("string size");
+  }
+  int size = atoi(value);
+  insertSymbol(STRING,  size, name);
+  next();
+}
+
+void doDefArrayString() {
+  next();
+  if(token != NAME) {
+    expected("variable name");
+  }
+  char name[100];
+  strcpy(name, value);
+  next();
+  matchString(",");
+  if(token != NUMBER) {
+    expected("string size");
+  }
+  int stringSize = atoi(value);
+  next();
+  matchString(",");
+  if(token != NUMBER) {
+    expected("array size");
+  }
+  int arraySize = atoi(value);
+  insertSymbol(STRING,  stringSize * arraySize, name);
+  next();
+}
+
+
 void doVarDef() {
   switch(token) {
     case DEFINE_CHAR:
@@ -53,6 +94,7 @@ void doVarDef() {
       doDef(DOUBLE, DOUBLE_SZ);
       break;
     case DEFINE_STRING:
+      doDefString();
       break;
     default:
       break;
@@ -74,6 +116,7 @@ void doArrayDef() {
       doArrDef(DOUBLE, DOUBLE_SZ);
       break;
     case DEFINE_ARRAY_STRING:
+      doDefArrayString();
       break;
     default:
       break;

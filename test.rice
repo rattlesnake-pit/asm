@@ -1,6 +1,8 @@
 defc tony
 defi prueba
 deff medina
+defs dfdf, 10
+defas ff, 10, 10
 defad JL, 10
 label:
 pushkc 'a'
