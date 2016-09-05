@@ -1,0 +1,31 @@
+defi a
+defi b
+defi ans
+
+;this code does every basic operation on two ints
+rdi a
+rdi b
+
+pushi a
+pushi b
+add
+popi ans
+prti ans
+
+pushi a
+pushi b
+sub
+popi ans
+prti ans
+
+pushi a
+pushi b
+mul
+popi ans
+prti ans
+
+pushi a
+pushi b
+div
+popi ans
+prti ans
