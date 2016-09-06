@@ -236,6 +236,8 @@ void next() {
 }
 
 void nextString() {
+    getStringName();
+    /*
     handleWhite();//this might have to be removed
     if(isAlpha(look)) { //this might have to be isString instead of isAlpha
       getStringName();
@@ -248,7 +250,7 @@ void nextString() {
       value[1] = '\0';
       getChar();
       token = SYMBOL;
-    }
+    }*/
     scan();
 }
 

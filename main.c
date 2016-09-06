@@ -268,7 +268,7 @@ void addKstring(){
     writeSize(value);
     writeString(value);
     next();
-    matchString2("\"");
+    matchString("\"");
 }
 
 //n'  value = '
@@ -291,8 +291,7 @@ void doKonstantOp() {
             addKdouble();
             break;
         case PUSH_CONSTANT_STRING:
-            writeByte(token);
-            nextString();
+            doOneByteOp();
             addKstring();
             break;
         case STORE_CONSTANT_REGISTER:
