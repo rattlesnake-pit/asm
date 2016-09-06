@@ -8,7 +8,7 @@ label:
 prts dfdf
 prtas ff
 pushkc 'a'
-pushks "hola"
+pushks "hola mundo"
 pushki 255
 pushkf 2
 add

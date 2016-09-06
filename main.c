@@ -166,13 +166,11 @@ void writeInt(int val){
     for(int i = 24; i >= 0; i -= 8){
         writeByte(val >> i);
     }
-    //writeString(intToChar(val));
 }
 
 void writeFloat(float val){
     int x = *(int*)&val;
     writeInt(x);
-    //writeString(floatToChar(val));
 }
 
 void writell(long long val){
@@ -184,7 +182,6 @@ void writell(long long val){
 void writeDouble(double val){
     long long x = *(long long*)&val;
     writell(x);
-    //writeString(doubleToChar(val));
 }
 
 void writeSize(char *val){
@@ -261,7 +258,7 @@ void addKdouble(){
 }
 
 void addKstring(){
-    matchString("\"");
+    matchString2("\"");
     if(strlen(value) > 40){
         expected("string is too long");
     }
@@ -271,7 +268,7 @@ void addKstring(){
     writeSize(value);
     writeString(value);
     next();
-    matchString("\"");
+    matchString2("\"");
 }
 
 //n'  value = '
@@ -294,7 +291,8 @@ void doKonstantOp() {
             addKdouble();
             break;
         case PUSH_CONSTANT_STRING:
-            doOneByteOp();
+            writeByte(token);
+            nextString();
             addKstring();
             break;
         case STORE_CONSTANT_REGISTER:
