@@ -221,7 +221,7 @@ void addKchar(){
     if(strlen(value) != 1){
         expected("it's bigger than it's supposed to");
     }
-    if(!isAlphaNum(value[0]))//it returns int but im assuming this works because it returns 0 or 1
+    if(!isAlphaNum(value[0]))
     {
         expected("it's neither a number or a letter");
     }
@@ -244,7 +244,7 @@ void addKfloat(){
         expected("NaN or float");
     }
     float floatValue = (float)atof(value); //THIS IS NOT FROM STRING TO FLAOT THIS DOES STRING TO DOUBLE FIND THE CORRECT ONE
-    writeFloat(floatValue);//TODO: implement writeFloat function
+    writeFloat(floatValue);
     next();
 }
 
@@ -253,7 +253,7 @@ void addKdouble(){
         expected("NaD");
     }
     double doubleValue = atof(value);
-    writeDouble(doubleValue);//TODO: implement writeDouble function
+    writeDouble(doubleValue);
     next();
 }
 
@@ -295,8 +295,6 @@ void doKonstantOp() {
             addKstring();
             break;
         case STORE_CONSTANT_REGISTER:
-            //maybe make pushcontantint and this one the same
-            //I'm not 100% sure it should do the exact same
             doOneByteOp();
             addKint();
             break;
