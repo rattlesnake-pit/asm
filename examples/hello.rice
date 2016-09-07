@@ -1,0 +1,5 @@
+defs var, 10
+pushks "HOLAMUNDO"
+pops var
+prts var
+prtcr

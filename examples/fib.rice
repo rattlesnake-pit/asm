@@ -1,0 +1,54 @@
+    defi a
+    defi b
+    defi c
+    defi count
+    defi N
+    
+    ; este programa imprimira N numeros de la serie fibonacci
+    ;inizalizacion
+    ; a = 0, b = 1; count = 0
+    pushki 0
+    popi a
+    pushki 1
+    popi b
+    pushki 0
+    popi count
+    
+    ;read input from user
+    rdi N
+    
+    
+loop:
+    
+    ; if count < N
+    pushi count
+    pushi N
+    cmp
+    jmplt fin
+    
+    ;print current number of the series
+    pushi a
+    prti a
+    
+    ; c = a + b
+    pushi a
+    pushi b
+    add
+    popi c
+    
+    ; a = b
+    pushi b
+    popi a
+    
+    ; b = c
+    pushi c
+    popi b
+    
+    inc count
+    jmp loop
+    
+    
+    
+    
+fin:
+    halt
