@@ -5,10 +5,10 @@ defs dfdf, 10
 defas ff, 10, 10
 defad JL, 10
 label:
+pushks "hola mundo"
 prts dfdf
 prtas ff
 pushkc 'a'
-pushks "hola"
 pushki 255
 pushkf 2
 add

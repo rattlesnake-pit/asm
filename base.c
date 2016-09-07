@@ -152,7 +152,18 @@ void matchString(char* s) {
   if(strcmp(s, value) != 0) {
     expected(s);
   }
-  next();
+  else {
+      next();
+  }
+}
+
+void matchString2(char* s) {
+    if(strcmp(s, value) != 0) {
+        expected(s);
+    }
+    else {
+        nextString();
+    }
 }
 
 int isAlpha(char c) {
@@ -167,6 +178,10 @@ int isAlphaNum(char c) {
   return isAlpha(c) || isNum(c);
 }
 
+int isString(char c) {
+    return c != '\0' && c != '\"' && c != '\'';
+}
+
 void getName() {
   int i = 0;
   while(isAlphaNum(look)) {
@@ -176,6 +191,17 @@ void getName() {
   }
   value[i] = '\0';
   token = NAME;
+}
+
+void getStringName() {
+    int i = 0;
+    while(isString(look)) {
+        value[i] = upcase(look);
+        i++;
+        getChar();
+    }
+    value[i] = '\0';
+    token = NAME;
 }
 
 void getNum() {
@@ -207,6 +233,11 @@ void next() {
     token = SYMBOL;
   }
   scan();
+}
+
+void nextString() {
+    getStringName();
+    scan();
 }
 
 void init() {
