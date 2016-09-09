@@ -206,13 +206,30 @@ void getStringName() {
 
 void getNum() {
     int i = 0;
-    while(isNum(look)){
+    int hasPoint = 0;
+    if(look == '.') {
+      value[0] = '0';
+      value[1] = '.';
+      hasPoint = 1;
+      i = 2;
+      getChar();
+    }
+    while(isNum(look) || look == '.'){
+        if(look == '.') {
+          if(hasPoint) {
+            error("A number cannot have more than one decimal point");
+          }
+          hasPoint = 1;
+        }
         value[i] = look;
         i++;
         getChar();
     }
+    if(value[i-1] == '.') {
+      error("A number cannot end in a decimal point");
+    }
     value[i] = '\0';
-    token = NUMBER;
+    token = hasPoint? DECIMAL: NUMBER;
 }
 
 void handleWhite() {

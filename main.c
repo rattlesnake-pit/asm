@@ -174,13 +174,14 @@ void writeFloat(float val){
 }
 
 void writell(long long val){
-    for(int i = 58; i >= 0; i -= 8){
+    for(int i = 56; i >= 0; i -= 8){
         writeByte(val >> i);
     }
 }
 
 void writeDouble(double val){
     long long x = *(long long*)&val;
+    fprintf(stderr, "bytes: %llx", x);
     writell(x);
 }
 
@@ -232,7 +233,7 @@ void addKchar(){
 
 void addKint(){
     if(token != NUMBER){
-        expected("NaN");
+        expected("Number");
     }
     int intValue = atoi(value);
     writeInt(intValue);
@@ -240,8 +241,8 @@ void addKint(){
 }
 
 void addKfloat(){
-    if(token != NUMBER){
-        expected("NaN or float");
+    if(token != NUMBER && token != DECIMAL){
+        expected("Number or Decimal");
     }
     float floatValue = (float)atof(value); //THIS IS NOT FROM STRING TO FLAOT THIS DOES STRING TO DOUBLE FIND THE CORRECT ONE
     writeFloat(floatValue);
@@ -249,11 +250,13 @@ void addKfloat(){
 }
 
 void addKdouble(){
-    if(token != NUMBER){
-        expected("NaD");
+    if(token != NUMBER && token != DECIMAL){
+        expected("Number or Decimal");
     }
     double doubleValue = atof(value);
+    //fprintf(stderr, "double: %f", doubleValue);
     writeDouble(doubleValue);
+    //fprintf(stderr, "bytes: %llx", *(long long *)&doubleValue);
     next();
 }
 
