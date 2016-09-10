@@ -124,17 +124,6 @@ void doArrayDef() {
   }
 }
 
-void definitions() {
-  while(isDefinition(token)) {
-    if(isVarDef(token))
-      doVarDef();
-    else if(isArrayDef(token)) {
-      doArrayDef();
-    }
-    matchString("\n");
-  }
-}
-
 void doComment() {
   fprintf(stderr, "DOING COMMENT\n");
   matchString(";");
@@ -142,6 +131,21 @@ void doComment() {
     next();
   }
 }
+
+void definitions() {
+  while(isDefinition(token) || token == COMMENT) {
+    if(isVarDef(token))
+      doVarDef();
+    else if(isArrayDef(token)) {
+      doArrayDef();
+    }
+    else if(token == COMMENT) {
+      doComment();
+    }
+    matchString("\n");
+  }
+}
+
 
 void doLabel() {
   insertLabel();

@@ -1,9 +1,12 @@
+; comment before
 defc tony
 defi prueba
+; comment in between
 deff medina
 defs dfdf, 10
 defas ff, 10, 10
 defad JL, 10
+;comment after
 label:
 pushks "hola mundo"
 prts dfdf
