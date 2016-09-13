@@ -10,7 +10,8 @@ prts dfdf
 prtas ff
 pushkc 'a'
 pushki 255
-pushkf 2
+pushkf 3.5
+pushkd 2.5
 add
 rdf medina
 jmp label
