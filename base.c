@@ -207,11 +207,16 @@ void getStringName() {
 void getNum() {
     int i = 0;
     int hasPoint = 0;
+    if(look == '-') {
+      value[0] = '-';
+      i++;
+      getChar();
+    }
     if(look == '.') {
-      value[0] = '0';
-      value[1] = '.';
+      value[i] = '0';
+      value[i+1] = '.';
       hasPoint = 1;
-      i = 2;
+      i += 2;
       getChar();
     }
     while(isNum(look) || look == '.'){
@@ -240,7 +245,7 @@ void next() {
   if(isAlpha(look)) {
     getName();
   }
-  else if(isNum(look)) {
+  else if(isNum(look) || look == '-' || look == '.') {
     getNum();
   }
   else {
