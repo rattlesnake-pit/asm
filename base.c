@@ -238,7 +238,7 @@ void getNum() {
 }
 
 void handleWhite() {
-  while(look == ' ') getChar();
+  while(look == ' ' || look == '\r') getChar();
 }
 void next() {
   handleWhite();
