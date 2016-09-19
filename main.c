@@ -3,6 +3,11 @@
 #include "stdlib.h"
 #include "string.h"
 
+#ifdef _WIN32
+#include <io.h>
+#include <fcntl.h>
+#endif
+
 int PC = 0;
 int DS = 0;
 int st_end = 0;
@@ -411,6 +416,9 @@ void resolvePendingLabels() {
 }
 
 int main() {
+#ifdef _WIN32
+  _setmode( _fileno(stdout), _O_BINARY);
+#endif
   init();
   assembler();
   resolvePendingLabels();
