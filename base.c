@@ -196,7 +196,7 @@ void getName() {
 void getStringName() {
     int i = 0;
     while(isString(look)) {
-        value[i] = upcase(look);
+        value[i] = look;
         i++;
         getChar();
     }
