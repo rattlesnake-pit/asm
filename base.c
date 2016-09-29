@@ -1,6 +1,7 @@
 #include "stdio.h"
 #include "asm.h"
 #include "string.h"
+#include "strings.h"
 #include "stdlib.h"
 
 char* str_tokens[] = {
@@ -131,7 +132,7 @@ void insertSymbol(char type, int type_sz, char* name) {
 
 void scan() {
   for(int i = 0; i < tokens_size; i++) {
-    if(strcmp(value, str_tokens[i]) == 0) {
+    if(strcasecmp(value, str_tokens[i]) == 0) {
       token = (enum TOKENS)i;
     }
   }
@@ -185,7 +186,7 @@ int isString(char c) {
 void getName() {
   int i = 0;
   while(isAlphaNum(look)) {
-    value[i] = upcase(look);
+    value[i] = look;
     i++;
     getChar();
   }
@@ -196,7 +197,7 @@ void getName() {
 void getStringName() {
     int i = 0;
     while(isString(look)) {
-        value[i] = upcase(look);
+        value[i] =look;
         i++;
         getChar();
     }
