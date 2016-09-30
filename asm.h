@@ -1,7 +1,7 @@
 #ifndef ASM_H
 #define ASM_H
 
-#define TMP_BUFFER_SIZE 100
+#define TMP_BUFFER_SIZE 256
 
 #define NOT_FOUND -1
 

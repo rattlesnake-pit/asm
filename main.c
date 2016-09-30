@@ -30,7 +30,7 @@ void doArrDef(char type, int type_sz) {
   if(token != NAME) {
     expected("variable name");
   }
-  char name[100];
+  char name[256];
   strcpy(name, value);
   next();
   matchString(",");
@@ -48,7 +48,7 @@ void doDefString() {
   if(token != NAME) {
     expected("variable name");
   }
-  char name[100];
+  char name[256];
   strcpy(name, value);
   next();
   matchString(",");
@@ -65,7 +65,7 @@ void doDefArrayString() {
   if(token != NAME) {
     expected("variable name");
   }
-  char name[100];
+  char name[256];
   strcpy(name, value);
   next();
   matchString(",");
