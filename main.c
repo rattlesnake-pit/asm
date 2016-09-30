@@ -306,6 +306,10 @@ void doKonstantOp() {
             doOneByteOp();
             addKstring();
             break;
+        case PRINT_MESSAGE:
+            doOneByteOp();
+            addKstring();
+            break;
         case STORE_CONSTANT_REGISTER:
             doOneByteOp();
             addKint();

@@ -70,6 +70,7 @@ char* str_tokens[] = {
   "DIV",
   "MOD",
   "CMP",
+  "PRTM",
   ";",
   "\n",
   "DEFC",
@@ -303,7 +304,7 @@ int isOneByteOp() {
 
 int isKonstantOp() {
   return token >= PUSH_CONSTANT_CHAR && token <= PUSH_CONSTANT_STRING ||
-           token == STORE_CONSTANT_REGISTER;
+           token == STORE_CONSTANT_REGISTER || token == PRINT_MESSAGE;
 }
 
 int isVarOp() {
