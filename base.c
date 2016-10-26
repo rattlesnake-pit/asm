@@ -71,6 +71,8 @@ char* str_tokens[] = {
   "MOD",
   "CMP",
   "PRTM",
+  "MOVY",
+  "POPY",
   ";",
   "\n",
   "DEFC",
@@ -299,7 +301,9 @@ int isOneByteOp() {
   return token == HALT ||
          token == PRINTLF ||
          token == POP_TO_LOOP_INDEX ||
-        (token >= ADD && token <= COMPARE); //COMPARE checks the values of the 2 places in the stack and adds it to a registry so that means it is a onebyteop as well
+         token == MOVY ||
+         token == POPY ||
+        (token >= ADD && token <= COMPARE);
 }
 
 int isKonstantOp() {
